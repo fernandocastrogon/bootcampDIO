@@ -73,7 +73,7 @@ while True:
     elif opcao == "3":
         print("------EXTRATO------")
         print("\n".join(extrato))
-        print(f"\n Saldo da conta: {saldo}")
+        print(f"\n Saldo da conta: {saldo:.2f}")
     elif opcao == "0":
         break
 
