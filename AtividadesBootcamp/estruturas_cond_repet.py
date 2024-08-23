@@ -62,7 +62,7 @@ print("Obrigado por usar nosso sistema, ate logo")
 #comando break - sai da estrutura de repeticao, cortando o laco
 #comando continue - pula uma repeticao
 
-#exibi apenas os numeros impares de 0 a 99
+#exibi apenas os numeros impares de 0 a 99, utilizando o continue
 for numero in range(100):
     if numero % 2 == 0:
         continue
