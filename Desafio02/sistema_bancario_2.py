@@ -43,12 +43,14 @@ numero_saques = 0
 LIMITE_SAQUES = 3
 
 from datetime import datetime
+import pprint
 
 menu = """
 [1] Depositar
 [2] Sacar
 [3] Extrato
 [4] Criar usuário
+[5] Listar usuários
 [0] Sair
 
 => """
@@ -107,25 +109,41 @@ def Extrato(saldo, /, *, extrato):
 usuarios = []
 
 def criar_usuario():
-    dados_pessoais = {}
+    dados_pessoais = []
 
-    dados_pessoais['nome'] = nome = input("Digite o nome completo")
-    dados_pessoais['data_de_nascimento'] = data_nascimento = input("Digite sua data de nascimento formato DD/MM/AAAA")
+    dados_pessoais.append(input("Digite o nome completo"))
+    dados_pessoais.append(input("Digite sua data de nascimento formato DD/MM/AAAA"))
     while True:
         cpf = input("Digite o CPF do usuário : ")
         # Verificar se o CPF já está na lista de usuários
-        cpf_existe = any(usuario['cpf'] == cpf for usuario in usuarios)
+        cpf_existe = any(usuario[2] == cpf for usuario in usuarios)
         
         if cpf_existe:
             print("Este CPF já existe. Por favor, insira um CPF diferente.")
         else:
-            dados_pessoais['cpf'] = cpf
+            dados_pessoais.append(cpf)
             break  # Sai do loop se o CPF for único
-    dados_pessoais['endereco'] = endereco = input("Digite o endereço completo")
+    dados_pessoais.append(input("Digite o endereço completo"))
     usuarios.append(dados_pessoais)
     print('Usuário criado com sucesso')
-    print(usuarios)
 
+
+#Listar usuário
+    
+def listar_usuario():
+    if not usuarios:
+        print("Nenhum usuário cadastrado.")
+        return
+    usuarios_formatados = [
+        f"Nome: {usuario[0]}, Data de Nascimento: {usuario[1]}, CPF: {usuario[2]}, Endereço: {usuario[3]}"
+        for usuario in usuarios
+    ]
+    
+    # Junta todas as strings com uma quebra de linha
+    usuarios_str = "\n".join(usuarios_formatados)
+    print("\nLista de Usuários:\n")
+    print(usuarios_str)
+    
 
 while True:
 
@@ -135,7 +153,6 @@ while True:
        valor_deposito = float(input("Digite o valor que deseja depositar: "))
        saldo, extrato = deposito(saldo, valor_deposito, extrato)
         
-       
     elif opcao == "2":
         # Solicita o valor do saque ao usuário
         valor_saque = float(input("Digite o valor solicitado: "))
@@ -153,8 +170,10 @@ while True:
         Extrato(saldo, extrato=extrato)
     elif opcao == "4":
         criar_usuario()
+    elif opcao == "5":
+        listar_usuario()
     elif opcao == "0":
         break
 
     else:
-        print("Operacao invalida, por favor selecione novamente a operacaoo desejada.")
+        print("Operação invalida, por favor selecione novamente a operação desejada.")
