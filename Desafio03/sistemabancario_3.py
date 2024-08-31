@@ -196,7 +196,7 @@ def depositar(clientes):
     cliente = filtrar_cliente(cpf, clientes)
 
     if not cliente:
-        print("\n@@@ Cliente não encontrado! @@@")
+        print("\n Cliente não encontrado! ")
         return
 
     valor = float(input("Informe o valor do depósito: "))
@@ -214,7 +214,7 @@ def sacar(clientes):
     cliente = filtrar_cliente(cpf, clientes)
 
     if not cliente:
-        print("\n@@@ Cliente não encontrado! @@@")
+        print("\nCliente não encontrado! ")
         return
 
     valor = float(input("Informe o valor do saque: "))
@@ -232,14 +232,14 @@ def exibir_extrato(clientes):
     cliente = filtrar_cliente(cpf, clientes)
 
     if not cliente:
-        print("\n@@@ Cliente não encontrado! @@@")
+        print("\n Cliente não encontrado!")
         return
 
     conta = recuperar_conta_cliente(cliente)
     if not conta:
         return
 
-    print("\n================ EXTRATO ================")
+    print("\n=== EXTRATO ===")
     transacoes = conta.historico.transacoes
 
     extrato = ""
@@ -259,7 +259,7 @@ def criar_cliente(clientes):
     cliente = filtrar_cliente(cpf, clientes)
 
     if cliente:
-        print("\n@@@ Já existe cliente com esse CPF! @@@")
+        print("\nJá existe cliente com esse CPF")
         return
 
     nome = input("Informe o nome completo: ")
@@ -278,14 +278,14 @@ def criar_conta(numero_conta, clientes, contas):
     cliente = filtrar_cliente(cpf, clientes)
 
     if not cliente:
-        print("\n@@@ Cliente não encontrado, fluxo de criação de conta encerrado! @@@")
+        print("\n Cliente não encontrado, fluxo de criação de conta encerrado!")
         return
 
     conta = ContaCorrente.nova_conta(cliente=cliente, numero=numero_conta)
     contas.append(conta)
     cliente.contas.append(conta)
 
-    print("\n=== Conta criada com sucesso! ===")
+    print("\nConta criada com sucesso!")
 
 
 def listar_contas(contas):
@@ -301,30 +301,30 @@ def main():
     while True:
         opcao = menu()
 
-        if opcao == "d":
+        if opcao == "1":
             depositar(clientes)
 
-        elif opcao == "s":
+        elif opcao == "2":
             sacar(clientes)
 
-        elif opcao == "e":
+        elif opcao == "3":
             exibir_extrato(clientes)
 
-        elif opcao == "nu":
+        elif opcao == "4":
             criar_cliente(clientes)
 
-        elif opcao == "nc":
+        elif opcao == "5":
             numero_conta = len(contas) + 1
             criar_conta(numero_conta, clientes, contas)
 
-        elif opcao == "lc":
+        elif opcao == "6":
             listar_contas(contas)
 
-        elif opcao == "q":
+        elif opcao == "0":
             break
 
         else:
-            print("\n@@@ Operação inválida, por favor selecione novamente a operação desejada. @@@")
+            print("\nOperação inválida, por favor selecione novamente a operação desejada.")
 
 
 main()
